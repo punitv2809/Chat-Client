@@ -52,9 +52,9 @@ const Register = () => {
                         </div>
                     </form>
 
-                    <div className="text-center">
+                    <div className="text-center flex items-center">
                         <p className="text-sm">Already tuned in?</p>
-                        <a href="/login" className="text-pink-500 hover:underline">Log in and keep chatting!</a>
+                        <a href="/login" className="ml-1 text-sm text-pink-600 font-medium hover:underline">Log in and keep chatting!</a>
                     </div>
                 </div>
             </div>

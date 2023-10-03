@@ -14,4 +14,44 @@ body {
         border-radius: 10px;
         @apply border border-white/50;
     }
+
+    .bg-prompt {
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10.5px);
+        -webkit-backdrop-filter: blur(15.5px);
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        @apply w-1.5;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        @apply bg-secondary-lighter rounded-full;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        @apply bg-primary-lighter rounded-full;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary-darker/25;
+    }
+
+    /* Dark mode styles */
+    .dark ::-webkit-scrollbar-track {
+        @apply bg-primary-darker/25;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+        @apply bg-secondary-lighter/50;
+    }
+
+    .dark ::-webkit-scrollbar-thumb:hover {
+        @apply bg-secondary-darker/75;
+    }
+
 }
