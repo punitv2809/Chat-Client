@@ -28,7 +28,7 @@ const ThemeToggle = () => {
     }, [darkMode]);
 
     return (
-        <button className='fixed bottom-0 right-0 m-3 bg-stone-900 dark:bg-pink-500 text-white text-xs rounded-md px-3 py-2' onClick={toggleDarkMode}>
+        <button className='fixed bottom-0 right-0 m-3 bg-stone-900 dark:bg-ternary text-white text-xs rounded-md px-3 py-2' onClick={toggleDarkMode}>
             Toggle Theme
         </button>
     );

@@ -11,3 +11,12 @@
     font-weight: normal;
     font-style: normal;
 }
+
+/* * {
+    border: 1px solid red;
+} */
+
+.bg-cool {
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 32px, #1d1b2e 32px, #1d1b2e 64px);
+    background-color: #222035;
+}
