@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Mention from './Mention';
+import Reactions from './Reactions';
+import { FaRegEye } from 'react-icons/fa'
 
 const Message = ({ isCurrentUser, content }) => {
+
+    const [isHovered, setIsHovered] = useState(false);
+
     const messageClass = isCurrentUser
         ? 'flex flex-row-reverse text-sm'
         : 'flex text-sm';
@@ -37,8 +42,11 @@ const Message = ({ isCurrentUser, content }) => {
         <motion.div
             initial="hidden"
             animate="visible"
+            whileHover="hover"
             variants={messageVariants}
             className={messageClass}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
             <motion.img
                 initial="hidden"
@@ -47,14 +55,24 @@ const Message = ({ isCurrentUser, content }) => {
                 src='https://i.giphy.com/media/YTJXDIivNMPuNSMgc0/giphy.webp'
                 className='w-12 h-12 rounded-full'
             />
-            <div className='content max-w-fit p-3 w-6/12'>
-                <div className='flex items-center justify-between mb-1 pr-3'>
-                    <p>John Doe</p>
-                    <p className='ml-2 text-xs text-white/50'>9:06</p>
+            <div className={`content max-w-fit w-9/12 relative flex ${isCurrentUser ? 'flex-row-reverse' : ''} items-end justify-center`}>
+                <div className='p-3 w-full'>
+                    <div className='flex items-center justify-between mb-1 pr-3'>
+                        <p>John Doe</p>
+                        <p className='ml-2 text-xs text-white/50'>9:06</p>
+                    </div>
+                    <span className={`inline-flex w-full flex-wrap items-center ${background} p-3 ${roundedClass} break-all`}>
+                        {content.map((segment, index) => renderSegment(segment))}
+                    </span>
+                    <div className='flex items-center justify-start gap-2 seen mt-1.5 ml-1 text-white/50'>
+                        <img src='https://source.unsplash.com/50x50/?avatar' className='w-4 h-4 rounded-full' />
+                        <img src='https://source.unsplash.com/50x50/?new' className='w-4 h-4 rounded-full' />
+                        <img src='https://source.unsplash.com/50x50/?nature' className='w-4 h-4 rounded-full' />
+                        <p className='text-xs text-white/50'>+9</p>
+                    </div>
                 </div>
-                <span className={`inline-flex w-full flex-wrap items-center ${background} p-3 ${roundedClass} break-all`}>
-                    {content.map((segment, index) => renderSegment(segment))}
-                </span>
+                {/* reactions */}
+                <Reactions isCurrentUser={isCurrentUser} isHovered={isHovered} />
             </div>
         </motion.div>
     );

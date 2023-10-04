@@ -88,12 +88,13 @@ const App = () => {
                 return updatedMessages;
             });
         }
-
+        socket.on("connect_error", err => console.log(err.data))
         socket.on('connected', onConnect);
         socket.on('disconnect', onDisconnect);
         socket.on('new-message', onMessage);
 
         return () => {
+            socket.off('connect_error', onConnect);
             socket.off('connected', onConnect);
             socket.off('disconnect', onDisconnect);
             socket.off('new-message', onMessage);
