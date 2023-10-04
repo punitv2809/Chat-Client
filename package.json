@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --config webpack.common.js --watch",
+    "tailwind": "npx tailwindcss -i ./src/input.css -o ./build/output.css --watch",
     "start": "electron ."
   },
   "keywords": [],
