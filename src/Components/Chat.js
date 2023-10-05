@@ -32,12 +32,13 @@ const Chat = ({ name, messages, tabKey }) => {
                 </div>
             </div>
             {/* chat view */}
-            <div ref={chatViewRef} className='chat-view grow overflow-y-scroll w-full p-3'>
+            <div ref={chatViewRef} className='chat-view grow overflow-x-hidden overflow-y-scroll w-full p-3'>
                 {messages.map((messageData, index) => (
                     <Message
                         key={index}
                         isCurrentUser={messageData.isCurrentUser}
                         content={messageData.content}
+                        reply={messageData.reply}
                     />
                 ))}
             </div>

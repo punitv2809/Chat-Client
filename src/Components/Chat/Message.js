@@ -2,11 +2,22 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Mention from './Mention';
 import Reactions from './Reactions';
-import { FaRegEye } from 'react-icons/fa'
+import Reply from './Reply';
 
-const Message = ({ isCurrentUser, content }) => {
+const Message = ({ isCurrentUser, content, reply = null }) => {
+    const [showReactions, setShowReactions] = useState(false);
+    const dragConstraints = isCurrentUser ? { left: 0, right: 0.5 } : { left: -0.5, right: 0 };
 
-    const [isHovered, setIsHovered] = useState(false);
+    const handleMiddleMouseDown = (event) => {
+        if (event.button === 1) {  // 1 is for the middle button.
+            event.preventDefault();  // This prevents the default "auto-scroll" behavior.
+            setShowReactions(prev => !prev); // Toggle the reactions display.
+        }
+    }
+
+    const handleMouseLeave = () => {
+        setShowReactions(false);
+    }
 
     const messageClass = isCurrentUser
         ? 'flex flex-row-reverse text-sm'
@@ -39,42 +50,48 @@ const Message = ({ isCurrentUser, content }) => {
     };
 
     return (
-        <motion.div
-            initial="hidden"
-            animate="visible"
-            whileHover="hover"
-            variants={messageVariants}
-            className={messageClass}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <motion.img
+        <div>
+            <motion.div
                 initial="hidden"
                 animate="visible"
-                variants={imageVariants}
-                src='https://i.giphy.com/media/YTJXDIivNMPuNSMgc0/giphy.webp'
-                className='w-12 h-12 rounded-full'
-            />
-            <div className={`content max-w-fit w-9/12 relative flex ${isCurrentUser ? 'flex-row-reverse' : ''} items-end justify-center`}>
-                <div className='p-3 w-full'>
-                    <div className='flex items-center justify-between mb-1 pr-3'>
-                        <p>John Doe</p>
-                        <p className='ml-2 text-xs text-white/50'>9:06</p>
+                whileHover="hover"
+                variants={messageVariants}
+                className={messageClass}
+                onMouseDown={handleMiddleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                drag="x"  // Enable drag on the x-axis
+                dragConstraints={dragConstraints}  // Restrict the drag distance to 100 pixels either way
+                dragMomentum={true}  // Disabling the momentum effect
+            >
+                <motion.img
+                    initial="hidden"
+                    animate="visible"
+                    variants={imageVariants}
+                    src='https://i.giphy.com/media/YTJXDIivNMPuNSMgc0/giphy.webp'
+                    className='w-12 h-12 rounded-full'
+                />
+                <div className={`content max-w-fit w-9/12 relative flex ${isCurrentUser ? 'flex-row-reverse' : ''} items-end justify-center`}>
+                    <div className='p-3 w-full'>
+                        <div className='flex items-center justify-between mb-1 pr-3'>
+                            <p>John Doe</p>
+                            <p className='ml-2 text-xs text-white/50'>9:06</p>
+                        </div>
+                        <span className={`inline-flex w-full flex-wrap items-center ${background} p-3 ${roundedClass} break-all`}>
+                            {content.map((segment, index) => renderSegment(segment))}
+                        </span>
+                        <div className='flex items-center justify-start gap-2 seen mt-1.5 ml-1 text-white/50'>
+                            <img src='https://source.unsplash.com/50x50/?avatar' className='w-4 h-4 rounded-full' />
+                            <img src='https://source.unsplash.com/50x50/?new' className='w-4 h-4 rounded-full' />
+                            <img src='https://source.unsplash.com/50x50/?nature' className='w-4 h-4 rounded-full' />
+                            <p className='text-xs text-white/50'>+9</p>
+                        </div>
                     </div>
-                    <span className={`inline-flex w-full flex-wrap items-center ${background} p-3 ${roundedClass} break-all`}>
-                        {content.map((segment, index) => renderSegment(segment))}
-                    </span>
-                    <div className='flex items-center justify-start gap-2 seen mt-1.5 ml-1 text-white/50'>
-                        <img src='https://source.unsplash.com/50x50/?avatar' className='w-4 h-4 rounded-full' />
-                        <img src='https://source.unsplash.com/50x50/?new' className='w-4 h-4 rounded-full' />
-                        <img src='https://source.unsplash.com/50x50/?nature' className='w-4 h-4 rounded-full' />
-                        <p className='text-xs text-white/50'>+9</p>
-                    </div>
+                    {/* reactions */}
+                    <Reactions isCurrentUser={isCurrentUser} isHovered={showReactions} />
                 </div>
-                {/* reactions */}
-                <Reactions isCurrentUser={isCurrentUser} isHovered={isHovered} />
-            </div>
-        </motion.div>
+            </motion.div>
+            {reply && <Reply isCurrentUser={reply.isCurrentUser} content={reply.content} />}
+        </div>
     );
 }
 

@@ -52,9 +52,14 @@ const App = () => {
             {
                 isCurrentUser: false,
                 content: [
-                    { type: "text", value: "Hey " },
+                    { type: "text", value: "user@98" },
                 ],
-            },
+            }, {
+                isCurrentUser: false,
+                content: [
+                    { type: "text", value: "this is the username" },
+                ],
+            }
         ],
         2: [
             {
