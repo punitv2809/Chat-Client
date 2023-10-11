@@ -4,7 +4,7 @@ import Mention from './Mention';
 import Reactions from './Reactions';
 import Reply from './Reply';
 
-const Message = ({ isCurrentUser, content, reply = null }) => {
+const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
     const [showReactions, setShowReactions] = useState(false);
     const dragConstraints = isCurrentUser ? { left: 0, right: 0.5 } : { left: -0.5, right: 0 };
 
@@ -62,6 +62,15 @@ const Message = ({ isCurrentUser, content, reply = null }) => {
                 drag="x"  // Enable drag on the x-axis
                 dragConstraints={dragConstraints}  // Restrict the drag distance to 100 pixels either way
                 dragMomentum={true}  // Disabling the momentum effect
+                onDragEnd={() => {
+                    const text = content.reduce((acc, curr) => {
+                        return curr.type === 'text' ? acc + curr.value : acc;
+                    }, '');
+                    return replyState(prev => ({
+                        ...prev,
+                        name: text.length > 50 ? text.substring(0, 10) + '...' : text
+                    }))
+                }}
             >
                 <motion.img
                     initial="hidden"

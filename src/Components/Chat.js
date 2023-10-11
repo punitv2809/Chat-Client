@@ -9,6 +9,7 @@ const Chat = ({ name, messages, tabKey }) => {
     const { isSettingsOpen } = useContext(ChatContext);
     const chatViewRef = useRef(null);
     const [prevMessageCount, setPrevMessageCount] = useState(messages.length);
+    const [reply, setReply] = useState({name : 'punit'});
 
     useEffect(() => {
         if (chatViewRef.current && prevMessageCount !== messages.length) {
@@ -39,10 +40,11 @@ const Chat = ({ name, messages, tabKey }) => {
                         isCurrentUser={messageData.isCurrentUser}
                         content={messageData.content}
                         reply={messageData.reply}
+                        replyState={setReply}
                     />
                 ))}
             </div>
-            <Prompt shouldShrink={!false} key={name} tabKey={tabKey} />
+            <Prompt reply={reply} shouldShrink={!false} key={name} tabKey={tabKey} />
         </div>
     )
 }
