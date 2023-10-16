@@ -66,7 +66,7 @@ const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
                     const text = content.reduce((acc, curr) => {
                         return curr.type === 'text' ? acc + curr.value : acc;
                     }, '');
-                    return replyState(prev => ({
+                    replyState(prev => ({
                         ...prev,
                         name: text.length > 50 ? text.substring(0, 10) + '...' : text
                     }))

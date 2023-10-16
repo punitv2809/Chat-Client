@@ -6,9 +6,9 @@ export const socket = io(
     URL, {
     auth: {
         register: {
-            id: "123456789",
-            username: "punit verma",
-            displayName: "Dummy User",
+            id: "651c64153e249ed2dcab1460",
+            username: "punit_verma",
+            displayName: "Punit Verma",
             email: "dummy_user@example.com",
             avatarUrl: "https://i.imgur.com/4QFb6wW.png",
             dateJoined: new Date("2023-01-01T00:00:00Z"),

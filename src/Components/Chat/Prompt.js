@@ -6,8 +6,8 @@ import ChatContext from '../Context/ChatContext';
 import Message from '../../Models/Message';
 
 const Prompt = ({ reply = {}, tabKey }) => {
-
-    const { messages, setMessages, socket } = useContext(ChatContext)
+    console.log("prompt : ", reply);
+    const { messages, setMessages, socket, isSettingsOpen } = useContext(ChatContext)
 
     const inputRef = useRef();
 
@@ -61,8 +61,8 @@ const Prompt = ({ reply = {}, tabKey }) => {
 
     return (
         <motion.div
-            className={`bg-prompt text-sm flex items-center justify-center absolute bottom-0 m-3 mb-12 p-3`}
-            style={{ width: "58.333333%", height: "3rem", borderRadius: "0.375rem" }}
+            className={`bg-prompt ${isSettingsOpen ? 'w-10/12' : 'w-9/12'} text-sm flex items-center justify-center absolute bottom-0 m-3 mb-12 p-3`}
+            style={{ height: "3rem", borderRadius: "0.375rem" }}
         >
             {(
                 <>
