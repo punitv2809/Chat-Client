@@ -1,15 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext} from 'react'
 import SideBar from './SideBar'
 import Settings from './Chat/Settings'
 import ChatContext from './Context/ChatContext';
 import Chat from './Chat';
-import Modal from './Modal';
 
 const ChatLayout = () => {
     const { chatTabs, currentChatId, messages, isSettingsOpen } = useContext(ChatContext);
     const chatTab = chatTabs.find(chat => chat.id === currentChatId);
-    console.log(chatTab && chatTab.id);
-
     return (
         <>
             {/* <Modal /> */}

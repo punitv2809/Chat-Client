@@ -18,7 +18,7 @@ const Prompt = ({ reply = {}, tabKey }) => {
         const newMessage = {
             isCurrentUser: true,
             content: [
-                { type: "text", value: msg },
+                { type: "text", value: msg, at: '20:15' },
             ]
         }
         console.log("tab key", tabKey)

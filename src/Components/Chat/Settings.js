@@ -1,33 +1,21 @@
-import React, { useState } from 'react'
-import ToggleSwitch from '../Micro/ToggleSwitch'
-import { FaSun, FaMoon } from 'react-icons/fa';
+import React, { useContext } from 'react';
+import ChatContext from '../Context/ChatContext';
+import { FaCaretRight } from 'react-icons/fa';
 
 const Settings = ({ isOpened = false }) => {
-    const [isOn, setIsOn] = useState(false);
+    const { settingsContent, isSettingsOpen, setSettingsOpen } = useContext(ChatContext);
     return (
-        <div className={`${isOpened ? 'block' : "hidden"} divide-y divide-white/20 col-span-3 h-[95vh] bg-primary-darker`}>
-            <div className='flex items-center justify-between p-2 text-sm text-white/50 bg-secondary-darker/10'>
-                <p>Stealth Chat Mode</p>
-                <ToggleSwitch
-                    isOn={isOn}
-                    onToggle={() => setIsOn(!isOn)}
-                    onIcon={<FaSun />}
-                    offIcon={<FaMoon />}
-                    onBgColor="bg-ternary"
-                />
+        isOpened ? (
+            <div className="block space-y-2 p-3 col-span-3 h-[95vh] bg-primary-darker">
+                <div>
+                    <button onClick={() => setSettingsOpen(!isSettingsOpen)} className='text-2xl text-white/50 hover:bg-primary-lighter active:scale-90 bg-primary-lighter p-2 rounded-md'>
+                        <FaCaretRight className='text-sm' />
+                    </button>
+                </div>
+                {settingsContent}
             </div>
-            <div className='flex items-center justify-between p-2 text-sm text-white/50 bg-secondary-darker/10'>
-                <p>Hide Flash Messages</p>
-                <ToggleSwitch
-                    isOn={!isOn}
-                    onToggle={() => setIsOn(!isOn)}
-                    onIcon={<FaSun />}
-                    offIcon={<FaMoon />}
-                    onBgColor="bg-ternary"
-                />
-            </div>
-        </div >
-    )
-}
+        ) : null
+    );
+};
 
-export default Settings
+export default Settings;

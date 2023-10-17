@@ -9,6 +9,7 @@ import Modal from './Components/Modal'
 const App = () => {
     const [isConnected, setIsConnected] = useState(socket.connected);
     const [isSettingsOpen, setSettingsOpen] = useState(false);
+    const [settingsContent, setSettingsContent] = useState(null);
     const [showGroupModal, setShowGroupModal] = useState(false);
     const [currentChatId, setCurrentChatId] = useState(null);
     const [user, setUser] = useState({
@@ -148,7 +149,24 @@ const App = () => {
     }, []);
 
     return (
-        <ChatContext.Provider value={{ socket, isSettingsOpen, setSettingsOpen, user, messages, setMessages, chatTabs, setChatTabs, users, setUsers, currentChatId, setCurrentChatId, showGroupModal, setShowGroupModal }}>
+        <ChatContext.Provider value={{
+            socket,
+            isSettingsOpen,
+            setSettingsOpen,
+            settingsContent,
+            setSettingsContent,
+            user,
+            messages,
+            setMessages,
+            chatTabs,
+            setChatTabs,
+            users,
+            setUsers,
+            currentChatId,
+            setCurrentChatId,
+            showGroupModal,
+            setShowGroupModal
+        }}>
             <Modal isOpen={showGroupModal} setIsOpen={setShowGroupModal} />
             <Pane />
             <ThemeToggle />

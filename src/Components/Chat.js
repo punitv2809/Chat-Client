@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { AiOutlineEllipsis } from 'react-icons/ai'
+import { LiaTimesSolid } from 'react-icons/lia'
 import Message from './Chat/Message'
 import Prompt from './Chat/Prompt'
 import ChatContext from './Context/ChatContext'
 import Search from './Search'
+import MemberSettings from './MemberSettings'
 
 const Chat = ({ name, messages, tabKey, typing }) => {
-    const { isSettingsOpen, users, setSettingsOpen } = useContext(ChatContext);
+    const { setSettingsContent, isSettingsOpen, users, setSettingsOpen } = useContext(ChatContext);
     const chatViewRef = useRef(null);
     const [prevMessageCount, setPrevMessageCount] = useState(messages.length);
     const [isSearching, setIsSearching] = useState(false);
@@ -18,7 +20,6 @@ const Chat = ({ name, messages, tabKey, typing }) => {
             segment.type === "text" && segment.value.includes(searchTerm)
         )
     );
-
 
     const [reply, setReply] = useState({ name: 'punit' });
 
@@ -76,7 +77,16 @@ const Chat = ({ name, messages, tabKey, typing }) => {
             {/* chat tab header */}
             <div className='flex w-full p-3'>
                 {renderAvatar()}
-                <div className="flex-grow cursor-pointer max-w-fit" onClick={() => setSettingsOpen(!isSettingsOpen)}>
+                <div className="flex-grow cursor-pointer max-w-fit" onClick={() => {
+                    if (isSearching) {
+                        setIsSearching(!isSearching)
+                    }
+                    setSettingsContent(<MemberSettings member={users.find(user => user._id === tabKey)} />)
+
+                    if (!isSettingsOpen) {
+                        setSettingsOpen(true);
+                    }
+                }}>
                     <h3 className="font-bold">{name}</h3>
                     <p className="truncate text-sm text-black/50 dark:text-white/50">
                         9 members, 4 online
@@ -85,7 +95,18 @@ const Chat = ({ name, messages, tabKey, typing }) => {
                 </div>
                 <div className='grow'></div>
                 <div className='flex items-center justify-center space-x-4'>
-                    <BsSearch onClick={() => setIsSearching(!isSearching)} className={'text-xl cursor-pointer text-white/50'} />
+                    {!isSearching && <BsSearch onClick={() => {
+                        if (isSettingsOpen) {
+                            setSettingsOpen(!isSettingsOpen);
+                        }
+                        setIsSearching(!isSearching)
+                    }} className={'text-xl cursor-pointer text-white/50'} />}
+                    {isSearching && <LiaTimesSolid onClick={() => {
+                        if (isSettingsOpen) {
+                            setSettingsOpen(!isSettingsOpen);
+                        }
+                        setIsSearching(!isSearching)
+                    }} className={'text-xl cursor-pointer text-white/50'} />}
                     {isSearching && <Search
                         padding='p-2'
                         showIcon={false}
