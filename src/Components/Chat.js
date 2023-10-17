@@ -8,7 +8,7 @@ import ChatContext from './Context/ChatContext'
 import Search from './Search'
 import MemberSettings from './MemberSettings'
 
-const Chat = ({ name, messages, tabKey, typing }) => {
+const Chat = ({ chatTabId, name, messages, tabKey, typing }) => {
     const { setSettingsContent, isSettingsOpen, users, setSettingsOpen } = useContext(ChatContext);
     const chatViewRef = useRef(null);
     const [prevMessageCount, setPrevMessageCount] = useState(messages.length);
@@ -120,9 +120,12 @@ const Chat = ({ name, messages, tabKey, typing }) => {
             <div ref={chatViewRef} className='chat-view grow overflow-x-hidden overflow-y-scroll w-full p-3'>
                 {filteredMessages.map((messageData, index) => (
                     <Message
+                        chatTabId={chatTabId}
+                        messageId={messageData._id}
                         key={index}
                         isCurrentUser={messageData.isCurrentUser}
                         content={messageData.content}
+                        reactions={messageData.reactions}
                         reply={messageData.reply}
                         replyState={setReply}
                     />

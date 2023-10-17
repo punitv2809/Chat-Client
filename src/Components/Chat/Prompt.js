@@ -19,7 +19,10 @@ const Prompt = ({ reply = {}, tabKey }) => {
             isCurrentUser: true,
             content: [
                 { type: "text", value: msg, at: '20:15' },
-            ]
+            ],
+            at: '19:40',
+            seen: [],
+            reactions: {}
         }
         console.log("tab key", tabKey)
 

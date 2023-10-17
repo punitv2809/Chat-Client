@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import Mention from './Mention';
 import Reactions from './Reactions';
 import Reply from './Reply';
+import Reaction from '../Micro/Reaction';
 
-const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
+const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactions, replyState, reply = null }) => {
     const [showReactions, setShowReactions] = useState(false);
     const dragConstraints = isCurrentUser ? { left: 0, right: 0.5 } : { left: -0.5, right: 0 };
 
@@ -38,6 +39,8 @@ const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
             return <Mention avatar={'https://i.giphy.com/media/RT7aITJt2BgUo/giphy.webp'} key={segment.id} name={segment.displayName} />
         }
     }
+
+    const contentLength = content.map((segment, index) => renderSegment(segment))[0].length
 
     const messageVariants = {
         hidden: { opacity: 0, y: -10 },
@@ -88,6 +91,11 @@ const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
                         <span className={`inline-flex w-full flex-wrap items-center ${background} p-3 ${roundedClass} break-all`}>
                             {content.map((segment, index) => renderSegment(segment))}
                         </span>
+                        <div className={`flex flex-wrap ${contentLength > 10 ? 'w-40' : 'w-32'} gap-2 my-2`}>
+                            {
+                                Object.keys(reactions).map(reaction => <Reaction reactors={reactions[reaction]} emoji={reaction} />)
+                            }
+                        </div>
                         <div className='flex items-center justify-start gap-2 seen mt-1.5 ml-1 text-white/50'>
                             <img src='https://source.unsplash.com/50x50/?avatar' className='w-4 h-4 rounded-full' />
                             <img src='https://source.unsplash.com/50x50/?new' className='w-4 h-4 rounded-full' />
@@ -96,7 +104,7 @@ const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
                         </div>
                     </div>
                     {/* reactions */}
-                    <Reactions isCurrentUser={isCurrentUser} isHovered={showReactions} />
+                    <Reactions setShowReactions={setShowReactions} chatTabId={chatTabId} messageId={messageId} userId={userId} isCurrentUser={isCurrentUser} isHovered={showReactions} />
                 </div>
             </motion.div>
             {reply && <Reply isCurrentUser={reply.isCurrentUser} content={reply.content} />}

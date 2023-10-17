@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import SideBar from './SideBar'
 import Settings from './Chat/Settings'
 import ChatContext from './Context/ChatContext';
@@ -14,7 +14,7 @@ const ChatLayout = () => {
                 {/* <button onClick={() => setSettingsOpen(!isSettingsOpen)} className='fixed top-0 z-30 bg-rose-500 m-14'>Settings</button> */}
                 <SideBar />
                 {
-                    (chatTab && <Chat key={chatTab.id} typing={chatTab.typing} name={chatTab.name} tabKey={chatTab.id} messages={messages[chatTab.id] ?? []} />)
+                    (chatTab && <Chat chatTabId={chatTab.id} key={chatTab.id} typing={chatTab.typing} name={chatTab.name} tabKey={chatTab.id} messages={messages[chatTab.id] ?? []} />)
                     ?? <div className={`${isSettingsOpen ? 'col-span-6' : 'col-span-9'} flex items-center justify-center bg-primary`}>
                         <div className='rounded-md text-white/50 p-3'>
                             <p>Open any chat from the side bar</p>
