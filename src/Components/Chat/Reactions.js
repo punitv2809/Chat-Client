@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs'
 
 const Reactions = ({ isCurrentUser, isHovered }) => {
-    const reactions = ['👋', '🤚', '🫵', '💪', '🧤', '🧣'];
+    const reactions = ['👋', '🤚', '❤️', '💪', '🖕', '😠'];
 
     const reactionsVariants = {
         hidden: { x: isCurrentUser ? 100 : -100, opacity: 0 },
@@ -12,7 +12,7 @@ const Reactions = ({ isCurrentUser, isHovered }) => {
 
     return (
         <motion.div
-            className={`reactions flex items-center p-1.5 justify-center bg-primary-lighter rounded-md border border-secondary-lighter/10 mb-[2.2rem] z-10`}
+            className={`reactions flex items-center p-1.5 mt-9 justify-center bg-primary-lighter rounded-md border border-secondary-lighter/10 mb-[2.2rem] z-10`}
             initial="hidden"
             animate={isHovered ? "visible" : "hidden"}
             variants={reactionsVariants}

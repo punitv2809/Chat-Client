@@ -1,4 +1,4 @@
-import React, { useContext, useId } from 'react';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import ChatContext from '../Context/ChatContext';
 
@@ -17,25 +17,34 @@ const MemberTile = ({
     const statusColor = status === "offline" ? "bg-red-500" : "bg-green-500";
     const borderColorClass = active ? "border-secondary/25 dark:border-secondary/25" : "border-secondary dark:border-primary";
 
-    const { messages, user } = useContext(ChatContext);
+    const { messages, user, setSettingsOpen } = useContext(ChatContext);
 
     const getUnSeenMessages = (messages, userId) => {
-        let badgeCount = 0;
         if (!messages) return 0;
 
-        messages.forEach(message => {
-            message.seen && !message.seen.includes(userId) ? (badgeCount += 1) : null
-        })
-
-        return badgeCount;
-    }
+        return messages.reduce((badgeCount, message) => {
+            return message.seen && !message.seen.includes(userId) ? badgeCount + 1 : badgeCount;
+        }, 0);
+    };
     const getRecentMessage = (messages) => {
-        if (!messages) return false;
-        let lastMessage = '';
-        messages[messages.length - 1].content.forEach(msg => msg.type === 'text' ? lastMessage += ' ' + msg.value : null)
-        return lastMessage;
-    }
+        if (!messages) return '';
+
+        const lastContent = messages[messages.length - 1].content;
+
+        const textMessages = lastContent
+            .filter((msg) => msg.type === 'text')
+            .map((msg) => msg.value)
+            .join(' ');
+
+        if (textMessages.length > 25) {
+            return textMessages.substring(0, 25) + '...';
+        } else {
+            return textMessages;
+        }
+    };
+
     const getRecentMessageTime = (messages) => {
+        console.log(messages)
         if (!messages) return false;
         return messages[messages.length - 1].at
     }
@@ -80,7 +89,10 @@ const MemberTile = ({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            onClick={setCurrentChatId}
+            onClick={() => {
+                setSettingsOpen(false);
+                setCurrentChatId()
+            }}
             className={`${baseClasses} ${bgColorClass} ${hoverClass} ${textColorClass}`}
         >
             {/* Avatar and Status */}

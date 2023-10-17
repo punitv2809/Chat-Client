@@ -79,7 +79,7 @@ const Message = ({ isCurrentUser, content, replyState, reply = null }) => {
                     src='https://i.giphy.com/media/YTJXDIivNMPuNSMgc0/giphy.webp'
                     className='w-12 h-12 rounded-full'
                 />
-                <div className={`content max-w-fit w-9/12 relative flex ${isCurrentUser ? 'flex-row-reverse' : ''} items-end justify-center`}>
+                <div className={`content max-w-fit w-full relative flex ${isCurrentUser ? 'flex-row-reverse' : ''} items-start justify-center`}>
                     <div className='p-3 w-full'>
                         <div className='flex items-center justify-between mb-1 pr-3'>
                             <p>John Doe</p>
