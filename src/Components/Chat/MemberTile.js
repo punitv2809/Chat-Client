@@ -1,4 +1,4 @@
-import React, { useContext, useId } from 'react';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import ChatContext from '../Context/ChatContext';
 
@@ -30,10 +30,10 @@ const MemberTile = ({
         return badgeCount;
     }
     const getRecentMessage = (messages) => {
-        if (!messages) return false;
         let lastMessage = '';
+        if (!messages) return lastMessage;
         messages[messages.length - 1].content.forEach(msg => msg.type === 'text' ? lastMessage += ' ' + msg.value : null)
-        return lastMessage;
+        return lastMessage.length > 25 ? lastMessage.substring(0, 25) + '...' : lastMessage;
     }
     const getRecentMessageTime = (messages) => {
         if (!messages) return false;

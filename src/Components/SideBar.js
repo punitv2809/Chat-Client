@@ -17,10 +17,10 @@ const SideBar = () => {
                     <Search />
                 </div>
                 <div className='p-3 flex items-center justify-start gap-2'>
-                    <button onClick={() => setShowGroupModal(!showGroupModal)} className='text-2xl text-white/50 hover:bg-primary-lighter active:scale-90 bg-primary-lighter/75 p-2 rounded-md'>
+                    <button onClick={() => setShowGroupModal(!showGroupModal)} className='text-2xl text-white/50 hover:bg-primary-lighter active:scale-90 bg-primary-lighter p-2 rounded-md'>
                         <BiGroup />
                     </button>
-                    <button onClick={() => { setSettingsOpen(!isSettingsOpen) }} className='text-2xl text-white/50 hover:bg-primary-lighter active:scale-90 bg-primary-lighter/75 p-2 rounded-md'>
+                    <button onClick={() => { setSettingsOpen(!isSettingsOpen) }} className='text-2xl text-white/50 hover:bg-primary-lighter active:scale-90 bg-primary-lighter p-2 rounded-md'>
                         <AiFillSetting />
                     </button>
                 </div>

@@ -16,6 +16,16 @@ const Settings = ({ isOpened = false }) => {
                     onBgColor="bg-ternary"
                 />
             </div>
+            <div className='flex items-center justify-between p-2 text-sm text-white/50 bg-secondary-darker/10'>
+                <p>Hide Flash Messages</p>
+                <ToggleSwitch
+                    isOn={!isOn}
+                    onToggle={() => setIsOn(!isOn)}
+                    onIcon={<FaSun />}
+                    offIcon={<FaMoon />}
+                    onBgColor="bg-ternary"
+                />
+            </div>
         </div >
     )
 }

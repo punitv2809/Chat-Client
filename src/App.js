@@ -52,11 +52,13 @@ const App = () => {
         {
             id: '652d5f9cabf9119a0fc9a375',
             name: "Sample Group",
+            typing: ["punit", "cool", "panda"],
             userId: 1
         },
         {
             id: '652d5f9cabf9119a0fc9a376',
             name: "Ideas 💡",
+            typing: ["punit"],
             userId: 2
         },
     ]);
