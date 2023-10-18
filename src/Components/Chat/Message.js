@@ -71,7 +71,8 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
                     }, '');
                     replyState(prev => ({
                         ...prev,
-                        name: text.length > 50 ? text.substring(0, 10) + '...' : text
+                        content: text.length > 200 ? text.substring(0, 200) + '...' : text,
+                        name: 'punit@verma'
                     }))
                 }}
             >
@@ -93,7 +94,7 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
                         </span>
                         <div className={`flex flex-wrap ${contentLength > 10 ? 'w-40' : 'w-32'} gap-2 my-2`}>
                             {
-                                Object.keys(reactions).map(reaction => <Reaction reactors={reactions[reaction]} emoji={reaction} />)
+                                Object.keys(reactions).map((reaction,index) => <Reaction key={index} reactors={reactions[reaction]} emoji={reaction} />)
                             }
                         </div>
                         <div className='flex items-center justify-start gap-2 seen mt-1.5 ml-1 text-white/50'>

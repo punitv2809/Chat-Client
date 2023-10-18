@@ -82,7 +82,7 @@ const Chat = ({ chatTabId, name, messages, tabKey, typing }) => {
                         setIsSearching(!isSearching)
                     }
                     setSettingsContent(<MemberSettings member={users.find(user => user._id === tabKey)} />)
-
+                    setSearchTerm('');
                     if (!isSettingsOpen) {
                         setSettingsOpen(true);
                     }
@@ -105,6 +105,7 @@ const Chat = ({ chatTabId, name, messages, tabKey, typing }) => {
                         if (isSettingsOpen) {
                             setSettingsOpen(!isSettingsOpen);
                         }
+                        setSearchTerm('');
                         setIsSearching(!isSearching)
                     }} className={'text-xl cursor-pointer text-white/50'} />}
                     {isSearching && <Search
@@ -131,7 +132,7 @@ const Chat = ({ chatTabId, name, messages, tabKey, typing }) => {
                     />
                 ))}
             </div>
-            <Prompt reply={reply} shouldShrink={!false} key={name} tabKey={tabKey} />
+            <Prompt reply={reply} replyState={setReply} shouldShrink={!false} key={name} tabKey={tabKey} />
         </div>
     )
 }
