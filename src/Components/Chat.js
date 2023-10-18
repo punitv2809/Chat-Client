@@ -23,6 +23,10 @@ const Chat = ({ chatTabId, name, messages, tabKey, typing }) => {
 
     const [reply, setReply] = useState({ name: 'punit' });
 
+    const getMessageById = (id) => {
+        return messages.find(message => message._id === id)
+    }
+
     useEffect(() => {
         if (chatViewRef.current && prevMessageCount !== messages.length) {
             chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight;
@@ -127,8 +131,9 @@ const Chat = ({ chatTabId, name, messages, tabKey, typing }) => {
                         isCurrentUser={messageData.isCurrentUser}
                         content={messageData.content}
                         reactions={messageData.reactions}
-                        reply={messageData.reply}
+                        replyId={messageData.repliedTo}
                         replyState={setReply}
+                        replyMessage={getMessageById(messageData.repliedTo)}
                     />
                 ))}
             </div>

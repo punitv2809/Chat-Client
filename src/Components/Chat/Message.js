@@ -4,10 +4,12 @@ import Mention from './Mention';
 import Reactions from './Reactions';
 import Reply from './Reply';
 import Reaction from '../Micro/Reaction';
+import { FiCornerDownRight } from 'react-icons/fi';
 
-const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactions, replyState, reply = null }) => {
+const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactions, replyState, replyId = null, replyMessage = null }) => {
     const [showReactions, setShowReactions] = useState(false);
     const dragConstraints = isCurrentUser ? { left: 0, right: 0.5 } : { left: -0.5, right: 0 };
+    console.log(replyMessage)
 
     const handleMiddleMouseDown = (event) => {
         if (event.button === 1) {  // 1 is for the middle button.
@@ -39,7 +41,6 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
             return <Mention avatar={'https://i.giphy.com/media/RT7aITJt2BgUo/giphy.webp'} key={segment.id} name={segment.displayName} />
         }
     }
-
     const contentLength = content.map((segment, index) => renderSegment(segment))[0].length
 
     const messageVariants = {
@@ -51,9 +52,17 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
         hidden: { opacity: 0, x: isCurrentUser ? 10 : -10 },
         visible: { opacity: 1, x: 0 }
     };
+    const getTextFromMessage = (messageContent) => {
+        let text = '';
+        for (const msg of messageContent) {
+            if (msg.type === 'text')
+                text += msg.value
+        }
+        return text;
+    }
 
     return (
-        <div>
+        <div id={`${messageId}`}>
             <motion.div
                 initial="hidden"
                 animate="visible"
@@ -71,6 +80,7 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
                     }, '');
                     replyState(prev => ({
                         ...prev,
+                        _id: messageId,
                         content: text.length > 200 ? text.substring(0, 200) + '...' : text,
                         name: 'punit@verma'
                     }))
@@ -89,12 +99,22 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
                             <p>John Doe</p>
                             <p className='ml-2 text-xs text-white/50'>9:06</p>
                         </div>
+                        {/* reply */}
+                        {
+                            Boolean(replyId) && Boolean(replyMessage) &&
+                            <a href={`#${replyId}`}>
+                                <div className={`${background} rounded-md m-2 p-3 italic text-white/50`}>
+                                    <FiCornerDownRight />
+                                    <p>{getTextFromMessage(replyMessage.content)}</p>
+                                </div>
+                            </a>
+                        }
                         <span className={`inline-flex w-full flex-wrap items-center ${background} p-3 ${roundedClass} break-all`}>
                             {content.map((segment, index) => renderSegment(segment))}
                         </span>
                         <div className={`flex flex-wrap ${contentLength > 10 ? 'w-40' : 'w-32'} gap-2 my-2`}>
                             {
-                                Object.keys(reactions).map((reaction,index) => <Reaction key={index} reactors={reactions[reaction]} emoji={reaction} />)
+                                Object.keys(reactions).map((reaction, index) => <Reaction key={index} reactors={reactions[reaction]} emoji={reaction} />)
                             }
                         </div>
                         <div className='flex items-center justify-start gap-2 seen mt-1.5 ml-1 text-white/50'>
@@ -108,7 +128,6 @@ const Message = ({ chatTabId, userId, messageId, isCurrentUser, content, reactio
                     <Reactions setShowReactions={setShowReactions} chatTabId={chatTabId} messageId={messageId} userId={userId} isCurrentUser={isCurrentUser} isHovered={showReactions} />
                 </div>
             </motion.div>
-            {reply && <Reply isCurrentUser={reply.isCurrentUser} content={reply.content} />}
         </div>
     );
 }

@@ -80,6 +80,7 @@ const App = () => {
                 }
             }, {
                 _id: "752d5f9cabf9119a0fc9a389",
+                repliedTo: "752d5f9cabf9119a0fc9a379",
                 at: "19:03",
                 isCurrentUser: false,
                 content: [

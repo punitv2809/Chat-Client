@@ -25,8 +25,12 @@ const Prompt = ({ reply = {}, replyState, tabKey }) => {
             seen: [],
             reactions: {}
         }
+        // if this was a reply
+        if (Object.keys(reply).length) {
+            newMessage.repliedTo = reply._id;
+        }
         console.log("tab key", tabKey)
-
+        console.log("message", newMessage);
         setMessages(prevMessages => {
             const updatedMessages = { ...prevMessages };
             if (!updatedMessages[tabKey]) {
